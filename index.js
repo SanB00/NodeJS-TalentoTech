@@ -122,7 +122,6 @@ async function gestionarParametrosDelComando() {
 
   const [method, endpointProducts, titulo, precio, categoria] = args;
   const validMethods = ["get", "post", "delete", "put"];
-
   if (!validMethods.includes(method.toLowerCase())) {
     console.error(
       `Error: Método HTTP no válido. Usar uno de los siguientes: ${validMethods.join(
@@ -131,13 +130,13 @@ async function gestionarParametrosDelComando() {
     );
     return;
   }
-
-    if (endpointProducts !== "products") {
-      console.error(
-        "Error: El endpoint proporcionado no es válido. Usar 'products'"
-      );
-      return;
-    }
+  let opcion = 0;
+  if (endpointProducts !== "products") {
+    console.error(
+      "Error: El endpoint proporcionado no es válido. Usar 'products'"
+    );
+    return;
+  }
 
   if (method.toLowerCase() === "get") {
     if (endpointProducts.includes("/")) {
@@ -153,6 +152,12 @@ async function gestionarParametrosDelComando() {
 
   if (method.toLowerCase() === "post") {
     opcion = 3;
+    if (!titulo || !precio || !categoria) {
+      console.error(
+        "Error: Para crear un producto se requieren los parámetros título, precio y categoría"
+      );
+      return;
+    }
     const objProducto = {
       titulo: titulo.trim(),
       precio: parseFloat(precio.trim()),
@@ -168,9 +173,7 @@ async function gestionarParametrosDelComando() {
       await derivarOpcionesMenu(opcion, objProducto);
     }
   }
-
-
 }
 //console.log("Hola Mundo desde Node.js");
 //main();
-gestionarParametrosDelComando();
+await gestionarParametrosDelComando();
