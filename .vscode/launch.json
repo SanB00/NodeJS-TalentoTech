@@ -13,7 +13,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/index.js",
-            "args": ["POST", "products"],
+            "args": ["POST", "products", "Pan", "29.99", "Comida"],
         }
     ]
 }

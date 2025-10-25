@@ -47,12 +47,12 @@ async function main() {
 
     const opcion = await ask("Seleccione una opción: ");
 
-    return await derivarOpcionesMenu(opcion);
+    return await derivarOpcionesMenu(opcion.trim());
   }
 }
 
 async function derivarOpcionesMenu(opcion, objProducto = {}) {
-  switch (opcion.trim()) {
+  switch (opcion) {
     case ("1", 1):
       const productos = await obtenerProducto();
       console.log("=== Todos los productos ===");
@@ -85,9 +85,9 @@ async function derivarOpcionesMenu(opcion, objProducto = {}) {
           "=== Creando nuevo producto con parámetros del comando ==="
         );
         objProductoACrear = {
-          titulo: objProducto.titulo.trim(),
-          precio: parseFloat(objProducto.precio.trim()),
-          categoria: objProducto.categoria.trim(),
+          titulo: objProducto.titulo,
+          precio: objProducto.precio,
+          categoria: objProducto.categoria,
         };
       }
       await crearProducto(objProductoACrear);
@@ -131,7 +131,7 @@ async function gestionarParametrosDelComando() {
     return;
   }
   let opcion = 0;
-  if (endpointProducts !== "products") {
+  if (endpointProducts !== "products" && !endpointProducts.includes("/")) {
     console.error(
       "Error: El endpoint proporcionado no es válido. Usar 'products'"
     );
